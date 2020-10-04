@@ -20,7 +20,9 @@ export default function Home() {
         <h1 className={styles.title}>
           Hello, I'm <a href="https://resume.evanchristians.co.za">Evan!</a>
         </h1>
-        <p>{words}</p>
+        <p>
+          <span className={styles.caret}>_</span>{words}
+        </p>
       </main>
     </Wrapper>
   );

@@ -40,6 +40,26 @@
   text-decoration: none;
 }
 
+.caret {
+  color: #0070f3;
+  margin-right: .25rem;
+  animation: caret 1000ms infinite;
+}
+
+@keyframes caret {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .title a:hover,
 .title a:focus,
 .title a:active {
