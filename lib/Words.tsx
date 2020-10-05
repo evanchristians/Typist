@@ -1,5 +1,10 @@
 import faker from "faker";
 
-export const Words = (count = 10): string => {
-  return new Array(count).fill(undefined).map((_) => faker.random.word()).join(" ");
+export const makeWords = (count = 10) => {
+  let words: string[] = [];
+  for (let i = 0; i <= count; i++) {
+    words.push(faker.random.word());
+  }
+
+  return words;
 };
