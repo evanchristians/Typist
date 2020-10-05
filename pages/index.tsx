@@ -1,6 +1,5 @@
 import { Wrapper } from "components/Wrapper";
 import { onKey } from "lib/onKey";
-import { submitWord } from "lib/SubmitWord";
 import { makeWords } from "lib/Words";
 import Head from "next/head";
 import { CSSProperties, useEffect, useState } from "react";
