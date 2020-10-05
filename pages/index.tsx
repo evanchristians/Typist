@@ -65,9 +65,6 @@ const Index: React.FC<IndexProps> = ({}) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Hello, I'm <a href="https://resume.evanchristians.co.za">Evan!</a>
-        </h1>
         <article className={styles.wordsContainer}>
           {outgoing?.map((word, key) => {
             if (word.text.length > 0) {
@@ -90,9 +87,15 @@ const Index: React.FC<IndexProps> = ({}) => {
         </article>
 
         <div style={inputStyles} className={styles.inputContainer}>
-          {input}
+          {input ? input : "␣"}
         </div>
       </main>
+      <p className={styles.title}>
+        Hello, I'm{" "}
+        <a href="https://resume.evanchristians.co.za" target="_blank">
+          Evan!
+        </a>
+      </p>
     </Wrapper>
   );
 };
