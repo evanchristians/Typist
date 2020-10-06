@@ -1,12 +1,12 @@
 import { Wrapper } from "components/Wrapper";
 import { getTime } from "lib/getTime";
 import { onKey } from "lib/onKey";
-import { makeGermanWords } from "lib/Words";
+import { makeGermanWords, makeWords } from "lib/Words";
 import Head from "next/head";
 import { CSSProperties, useEffect, useState } from "react";
 import styles from "../styles/Home.module.scss";
 
-let initialWords = makeGermanWords();
+let initialWords = makeWords();
 
 interface OutgoingWordProps {
   text: string;
@@ -14,6 +14,7 @@ interface OutgoingWordProps {
 }
 
 const Index = ({}) => {
+  const [lang, setLang] = useState("en");
   const [input, setInput] = useState("");
   const [targetIndex, setTargetIndex] = useState(0);
   const [target, setTarget] = useState(initialWords[targetIndex]);
@@ -31,7 +32,7 @@ const Index = ({}) => {
     initialWords.slice(targetIndex + 1, initialWords.length)
   );
   const [blockInputs, setBlockInputs] = useState(false);
-  const [wordCountInput, setWordCountInput] = useState("");
+  const [wordCountInput, setWordCountInput] = useState("36");
 
   useEffect(() => {
     if (input !== target.slice(0, input.length)) {
@@ -51,8 +52,24 @@ const Index = ({}) => {
   }, [input, errorCount]);
 
   useEffect(() => {
+    if (lang === "en") {
+      setWords(
+        makeWords(wordCountInput ? parseInt(wordCountInput) : undefined)
+      );
+    } else {
+      setWords(
+        makeGermanWords(wordCountInput ? parseInt(wordCountInput) : undefined)
+      );
+    }
+  }, [lang]);
+
+  useEffect(() => {
     if (parseInt(wordCountInput) >= 10) {
-      setWords(makeGermanWords(parseInt(wordCountInput)));
+      setWords(
+        lang === "de"
+          ? makeGermanWords(parseInt(wordCountInput))
+          : makeWords(parseInt(wordCountInput))
+      );
     }
   }, [wordCountInput]);
 
@@ -116,6 +133,27 @@ const Index = ({}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <div className={styles.languageSelectorContainer}>
+        <span
+          className={styles.languageSelector}
+          style={{ background: lang === "de" ? "#eee" : "none" }}
+          onClick={() => {
+            setLang("de");
+          }}
+        >
+          de
+        </span>{" "}
+        |{" "}
+        <span
+          className={styles.languageSelector}
+          style={{ background: lang === "en" ? "#eee" : "none" }}
+          onClick={() => {
+            setLang("en");
+          }}
+        >
+          en
+        </span>
+      </div>
       <main className={styles.main}>
         <div className={styles.flex}>
           <div className={styles.wpmContainer}>
@@ -151,9 +189,17 @@ const Index = ({}) => {
             className={styles.resetButton}
             onClick={() => {
               setWords(
-                makeGermanWords(
-                  wordCountInput === "" ? undefined : parseInt(wordCountInput)
-                )
+                lang === "de"
+                  ? makeGermanWords(
+                      wordCountInput === ""
+                        ? undefined
+                        : parseInt(wordCountInput)
+                    )
+                  : makeWords(
+                      wordCountInput === ""
+                        ? undefined
+                        : parseInt(wordCountInput)
+                    )
               );
             }}
           >
