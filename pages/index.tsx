@@ -20,6 +20,7 @@ const Index = ({}) => {
   const [outgoing, setOutGoing] = useState<Array<OutgoingWordProps>>([]);
   const [inputStyles, setInputStyles] = useState<CSSProperties>();
   const [startTime, setStartTime] = useState(0);
+  const [words, setWords] = useState(initialWords);
   const [wordCount, setWordCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [wpm, setWpm] = useState(0);
@@ -29,6 +30,8 @@ const Index = ({}) => {
   const [upcoming, setUpcoming] = useState(
     initialWords.slice(targetIndex + 1, initialWords.length)
   );
+  const [blockInputs, setBlockInputs] = useState(false);
+  const [wordCountInput, setWordCountInput] = useState("");
 
   useEffect(() => {
     if (input !== target.slice(0, input.length)) {
@@ -47,8 +50,29 @@ const Index = ({}) => {
       );
   }, [input, errorCount]);
 
+  useEffect(() => {
+    if (parseInt(wordCountInput) >= 10) {
+      setWords(makeWords(parseInt(wordCountInput)));
+    }
+  }, [wordCountInput]);
+
+  useEffect(() => {
+    setInput("");
+    setTargetIndex(0);
+    setTarget(words[0]);
+    setOutGoing([]);
+    setStartTime(0);
+    setWordCount(0);
+    setCharCount(0);
+    setInputCounter(0);
+    setErrorCount(0);
+    setAccuracy(0);
+    setWpm(0);
+    setUpcoming(words.slice(1, words.length));
+  }, [words]);
+
   onKey((key) => {
-    if (inputCounter === initialWords.length) return;
+    if (inputCounter === words.length || blockInputs === true) return;
 
     if (!startTime) {
       setStartTime(getTime());
@@ -66,8 +90,8 @@ const Index = ({}) => {
       }
       setInput("");
       setTargetIndex(targetIndex + 1);
-      setTarget(initialWords[targetIndex + 1]);
-      setUpcoming(initialWords.slice(targetIndex + 2, initialWords.length));
+      setTarget(words[targetIndex + 1]);
+      setUpcoming(words.slice(targetIndex + 2, words.length));
       setOutGoing([
         ...outgoing,
         { text: target, isWrong: input !== target ? true : false },
@@ -98,22 +122,34 @@ const Index = ({}) => {
             wpm: {wpm} acc: {accuracy}%
           </div>
 
+          <div className={styles.wordCountContainer}>
+            word count:{" "}
+            <input
+              className={styles.wordCountInput}
+              onKeyDown={(e) => {
+                if (e.key === "Backspace")
+                  return setWordCountInput(wordCountInput.slice(0, -1));
+                if (parseInt(wordCountInput + e.key) < 100)
+                  return setWordCountInput(
+                    isNaN(+e.key) || e.key === " "
+                      ? wordCountInput
+                      : wordCountInput + e.key
+                  );
+              }}
+              onFocus={() => {
+                setBlockInputs(true);wordCountInput ?? undefined
+              }}
+              onBlur={() => {
+                setBlockInputs(false);
+              }}
+              value={wordCountInput}
+            />
+          </div>
+
           <div
             className={styles.resetButton}
             onClick={() => {
-              initialWords = makeWords();
-              setInput("");
-              setTargetIndex(0);
-              setTarget(initialWords[0]);
-              setOutGoing([]);
-              setStartTime(0);
-              setWordCount(0);
-              setCharCount(0);
-              setInputCounter(0);
-              setErrorCount(0);
-              setAccuracy(0);
-              setWpm(0);
-              setUpcoming(initialWords.slice(1, initialWords.length));
+              setWords(makeWords(parseInt(wordCountInput) ?? undefined));
             }}
           >
             reset
