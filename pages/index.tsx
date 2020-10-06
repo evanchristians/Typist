@@ -15,6 +15,7 @@ interface OutgoingWordProps {
 
 const Index = ({}) => {
   const [lang, setLang] = useState("en");
+  const [placeholder, setPlaceHolder] = useState("type something...");
   const [input, setInput] = useState("");
   const [targetIndex, setTargetIndex] = useState(0);
   const [target, setTarget] = useState(initialWords[targetIndex]);
@@ -35,6 +36,12 @@ const Index = ({}) => {
   const [wordCountInput, setWordCountInput] = useState("36");
 
   useEffect(() => {
+    if (!target) {
+      return setInputStyles({
+        background: "#16A085",
+      });
+    }
+
     if (input !== target.slice(0, input.length)) {
       setInputStyles({
         background: "#ff1d15aa",
@@ -90,7 +97,8 @@ const Index = ({}) => {
 
   onKey((key) => {
     if (inputCounter === words.length || blockInputs === true) return;
-
+    setPlaceHolder("");
+    
     if (!startTime) {
       setStartTime(getTime());
     }
@@ -229,7 +237,7 @@ const Index = ({}) => {
 
         <div className={styles.flex}>
           <div style={inputStyles} className={styles.inputContainer}>
-            {input ?? "..."}
+            {input ? input : placeholder}
           </div>
         </div>
       </main>
