@@ -13,7 +13,7 @@ export const makeWords = (count = 36) => {
 export const makeGermanWords = (count = 36) => {
   let words: string[] = [];
   for (let i = 0; i <= count; i++) {
-    words.push(randomGermanWord());
+    words.push(randomGermanWord().toLowerCase());
   }
 
   return words;
