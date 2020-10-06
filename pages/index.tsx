@@ -24,6 +24,8 @@ const Index = ({}) => {
   const [charCount, setCharCount] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [inputCounter, setInputCounter] = useState(0);
+  const [errorCount, setErrorCount] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
   const [upcoming, setUpcoming] = useState(
     initialWords.slice(targetIndex + 1, initialWords.length)
   );
@@ -38,6 +40,14 @@ const Index = ({}) => {
       setInputStyles({
         background: "#eee",
       });
+    }
+
+    if (inputCounter === initialWords.length) {
+      setAccuracy(
+        Math.floor(
+          ((initialWords.length - errorCount) / initialWords.length) * 100
+        )
+      );
     }
   }, [input]);
 
@@ -66,6 +76,8 @@ const Index = ({}) => {
         ...outgoing,
         { text: target, isWrong: input !== target ? true : false },
       ]);
+      setErrorCount(input !== target ? errorCount + 1 : errorCount);
+
       return;
     }
 
@@ -83,7 +95,6 @@ const Index = ({}) => {
         <title>Typist</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Typist</h1>
 
       <main className={styles.main}>
         <div className={styles.wpmContainer}>wpm: {wpm}</div>
@@ -109,7 +120,7 @@ const Index = ({}) => {
         </article>
 
         <div style={inputStyles} className={styles.inputContainer}>
-          {input ? input : "..."}
+          {accuracy ? "Accuracy: " + accuracy + "%" : input ?? "..."}
         </div>
       </main>
       <p className={styles.title}>
@@ -118,15 +129,8 @@ const Index = ({}) => {
         </a>{" "}
         &middot;{" "}
         <a href="https://github.com/evanchristians/Typist" target="_blank">
-          source 
-        </a>{" "}
-        {/* &middot;{" "} */}
-        {/* <a
-          href="https://www.linkedin.com/in/evan-christians-50ba30159/"
-          target="_blank"
-        >
-          linkedin
-        </a> */}
+          source
+        </a>
       </p>
     </Wrapper>
   );

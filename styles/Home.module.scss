@@ -137,16 +137,15 @@
 .wordsContainer {
   display: flex;
   flex-wrap: wrap;
-  padding: 30px;
+  padding: 1.5rem;
   background: #eee;
   max-width: 50rem;
   margin: 0.5rem auto;
-  line-height: 2;
-  letter-spacing: 2px;
-  word-spacing: 4px;
+  line-height: 1.5;
+  letter-spacing: 1px;
   text-transform: lowercase;
   font-size: 18px;
-  border-radius: 1rem;
+  border-radius: .5rem;
 }
 
 .CharacterCurrent {
@@ -170,8 +169,8 @@
 .inputContainer {
   background: #eee;
   border: none;
-  border-radius: 1rem;
-  letter-spacing: 2px;
+  border-radius: .5rem;
+  letter-spacing: 1px;
   min-width: 20rem;
   height: 3rem;
   display: flex;
@@ -179,7 +178,6 @@
   align-items: center;
   padding: 0 2rem;
   font-size: 1rem;
-  // margin-left: auto;
 }
 
 .target {
@@ -219,6 +217,6 @@
 .wpmContainer {
   padding: 1rem;
   background: #eee;
-  border-radius: 1rem;
+  border-radius: .5rem;
   margin-right: auto;
 }
