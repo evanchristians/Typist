@@ -137,7 +137,8 @@ const Index = ({}) => {
                   );
               }}
               onFocus={() => {
-                setBlockInputs(true);wordCountInput ?? undefined
+                setBlockInputs(true);
+                wordCountInput ?? undefined;
               }}
               onBlur={() => {
                 setBlockInputs(false);
@@ -149,7 +150,11 @@ const Index = ({}) => {
           <div
             className={styles.resetButton}
             onClick={() => {
-              setWords(makeWords(parseInt(wordCountInput) ?? undefined));
+              setWords(
+                makeWords(
+                  wordCountInput === "" ? undefined : parseInt(wordCountInput)
+                )
+              );
             }}
           >
             reset
