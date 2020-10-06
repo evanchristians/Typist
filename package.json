@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "next": "9.5.3",
+    "random-noun-generator-german": "^0.1.3",
     "random-words": "^1.1.1",
     "react": "16.13.1",
     "react-dom": "16.13.1"

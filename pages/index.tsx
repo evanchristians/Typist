@@ -1,12 +1,12 @@
 import { Wrapper } from "components/Wrapper";
 import { getTime } from "lib/getTime";
 import { onKey } from "lib/onKey";
-import { makeWords } from "lib/Words";
+import { makeGermanWords } from "lib/Words";
 import Head from "next/head";
 import { CSSProperties, useEffect, useState } from "react";
 import styles from "../styles/Home.module.scss";
 
-let initialWords = makeWords();
+let initialWords = makeGermanWords();
 
 interface OutgoingWordProps {
   text: string;
@@ -52,7 +52,7 @@ const Index = ({}) => {
 
   useEffect(() => {
     if (parseInt(wordCountInput) >= 10) {
-      setWords(makeWords(parseInt(wordCountInput)));
+      setWords(makeGermanWords(parseInt(wordCountInput)));
     }
   }, [wordCountInput]);
 
@@ -151,7 +151,7 @@ const Index = ({}) => {
             className={styles.resetButton}
             onClick={() => {
               setWords(
-                makeWords(
+                makeGermanWords(
                   wordCountInput === "" ? undefined : parseInt(wordCountInput)
                 )
               );
