@@ -1,9 +1,9 @@
-import faker from "faker";
+import randomWords from "random-words";
 
 export const makeWords = (count = 24) => {
   let words: string[] = [];
   for (let i = 0; i <= count; i++) {
-    words.push(faker.random.word().toLowerCase());
+    words.push(randomWords(1)[0]);
   }
 
   return words;

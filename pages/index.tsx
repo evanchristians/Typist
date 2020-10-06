@@ -18,14 +18,15 @@ const Index = ({}) => {
   const [targetIndex, setTargetIndex] = useState(0);
   const [target, setTarget] = useState(initialWords[targetIndex]);
   const [outgoing, setOutGoing] = useState<Array<OutgoingWordProps>>([]);
-  const [upcoming, setUpcoming] = useState(
-    initialWords.slice(targetIndex + 1, initialWords.length)
-  );
   const [inputStyles, setInputStyles] = useState<CSSProperties>();
   const [startTime, setStartTime] = useState(0);
   const [wordCount, setWordCount] = useState(0);
+  const [charCount, setCharCount] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [inputCounter, setInputCounter] = useState(0);
+  const [upcoming, setUpcoming] = useState(
+    initialWords.slice(targetIndex + 1, initialWords.length)
+  );
 
   useEffect(() => {
     if (input !== target.slice(0, input.length)) {
@@ -48,10 +49,11 @@ const Index = ({}) => {
     }
 
     if (key === " " && input.length > 0) {
+      setCharCount(charCount + input.length);
       setInputCounter(inputCounter + 1);
       const durationInMinutes = (getTime() - startTime) / 60000.0;
       if (input === target) {
-        setWordCount(wordCount + 1);
+        setWordCount(Math.floor((charCount + input.length) / 5));
         setWpm(parseInt(((wordCount + 1) / durationInMinutes).toFixed(2)));
       } else {
         setWpm(parseInt((wordCount / durationInMinutes).toFixed(2)));
@@ -115,13 +117,16 @@ const Index = ({}) => {
           $(whoami)
         </a>{" "}
         &middot;{" "}
-        <a href="https://github.com/evanchristians" target="_blank">
-          github
+        <a href="https://github.com/evanchristians/Typist" target="_blank">
+          source 
         </a>{" "}
-        &middot;{" "}
-        <a href="https://www.linkedin.com/in/evan-christians-50ba30159/" target="_blank">
+        {/* &middot;{" "} */}
+        {/* <a
+          href="https://www.linkedin.com/in/evan-christians-50ba30159/"
+          target="_blank"
+        >
           linkedin
-        </a>
+        </a> */}
       </p>
     </Wrapper>
   );
