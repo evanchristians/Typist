@@ -41,15 +41,11 @@ const Index = ({}) => {
         background: "#eee",
       });
     }
-
-    if (inputCounter === initialWords.length) {
+    if (inputCounter > 0)
       setAccuracy(
-        Math.floor(
-          ((initialWords.length - errorCount) / initialWords.length) * 100
-        )
+        Math.floor(((inputCounter - errorCount) / inputCounter) * 100)
       );
-    }
-  }, [input]);
+  }, [input, errorCount]);
 
   onKey((key) => {
     if (inputCounter === initialWords.length) return;
@@ -97,7 +93,32 @@ const Index = ({}) => {
       </Head>
 
       <main className={styles.main}>
-        <div className={styles.wpmContainer}>wpm: {wpm}</div>
+        <div className={styles.flex}>
+          <div className={styles.wpmContainer}>
+            wpm: {wpm} acc: {accuracy}%
+          </div>
+
+          <div
+            className={styles.resetButton}
+            onClick={() => {
+              initialWords = makeWords();
+              setInput("");
+              setTargetIndex(0);
+              setTarget(initialWords[0]);
+              setOutGoing([]);
+              setStartTime(0);
+              setWordCount(0);
+              setCharCount(0);
+              setInputCounter(0);
+              setErrorCount(0);
+              setAccuracy(0);
+              setWpm(0);
+              setUpcoming(initialWords.slice(1, initialWords.length));
+            }}
+          >
+            reset
+          </div>
+        </div>
         <article className={styles.wordsContainer}>
           {outgoing?.map((word, key) => {
             if (word.text.length > 0) {
@@ -119,8 +140,10 @@ const Index = ({}) => {
           ))}
         </article>
 
-        <div style={inputStyles} className={styles.inputContainer}>
-          {accuracy ? "Accuracy: " + accuracy + "%" : input ?? "..."}
+        <div className={styles.flex}>
+          <div style={inputStyles} className={styles.inputContainer}>
+            {input ?? "..."}
+          </div>
         </div>
       </main>
       <p className={styles.title}>

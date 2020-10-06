@@ -218,5 +218,19 @@
   padding: 1rem;
   background: #eee;
   border-radius: .5rem;
-  margin-right: auto;
+}
+
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.resetButton {
+  padding: 1rem;
+  background: #eee;
+  border-radius: .5rem;
+  cursor: pointer;
 }
