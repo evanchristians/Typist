@@ -15,7 +15,7 @@ interface OutgoingWordProps {
 
 const Index = ({}) => {
   const [lang, setLang] = useState("en");
-  const [placeholder, setPlaceHolder] = useState("type something...");
+  const [placeholder, setPlaceHolder] = useState("_");
   const [input, setInput] = useState("");
   const [targetIndex, setTargetIndex] = useState(0);
   const [target, setTarget] = useState(initialWords[targetIndex]);
@@ -243,11 +243,11 @@ const Index = ({}) => {
       </main>
       <p className={styles.title}>
         <a href="https://resume.evanchristians.co.za" target="_blank">
-          $(whoami)
+          me
         </a>{" "}
         &middot;{" "}
         <a href="https://github.com/evanchristians/Typist" target="_blank">
-          source
+          code
         </a>
       </p>
     </Wrapper>
