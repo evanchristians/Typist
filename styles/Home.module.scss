@@ -64,7 +64,6 @@
   margin: 1rem auto;
   line-height: 1.15;
   font-size: 1rem;
-  font-family: monospace;
 }
 
 .title,
@@ -82,8 +81,6 @@
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 .grid {
@@ -143,7 +140,7 @@
   padding: 30px;
   background: #eee;
   max-width: 50rem;
-  margin: 4rem auto;
+  margin: 0.5rem auto;
   line-height: 2;
   letter-spacing: 2px;
   word-spacing: 4px;
@@ -174,7 +171,6 @@
   background: #eee;
   border: none;
   border-radius: 1rem;
-  font-family: monospace;
   letter-spacing: 2px;
   min-width: 20rem;
   height: 3rem;
@@ -183,6 +179,7 @@
   align-items: center;
   padding: 0 2rem;
   font-size: 1rem;
+  margin-left: auto;
 }
 
 .target {
@@ -216,4 +213,11 @@
 
 .word {
   margin-right: 1rem;
+}
+
+.wpmContainer {
+  padding: 1rem;
+  background: #eee;
+  border-radius: 1rem;
+  margin-right: auto;
 }

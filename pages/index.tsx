@@ -1,19 +1,19 @@
 import { Wrapper } from "components/Wrapper";
+import { getTime } from "lib/getTime";
 import { onKey } from "lib/onKey";
 import { makeWords } from "lib/Words";
 import Head from "next/head";
 import { CSSProperties, useEffect, useState } from "react";
 import styles from "../styles/Home.module.scss";
 
-const initialWords = makeWords();
+let initialWords = makeWords();
 
-interface IndexProps {}
 interface OutgoingWordProps {
   text: string;
   isWrong?: boolean;
 }
 
-const Index: React.FC<IndexProps> = ({}) => {
+const Index = ({}) => {
   const [input, setInput] = useState("");
   const [targetIndex, setTargetIndex] = useState(0);
   const [target, setTarget] = useState(initialWords[targetIndex]);
@@ -22,6 +22,10 @@ const Index: React.FC<IndexProps> = ({}) => {
     initialWords.slice(targetIndex + 1, initialWords.length)
   );
   const [inputStyles, setInputStyles] = useState<CSSProperties>();
+  const [startTime, setStartTime] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
+  const [wpm, setWpm] = useState(0);
+  const [inputCounter, setInputCounter] = useState(0);
 
   useEffect(() => {
     if (input !== target.slice(0, input.length)) {
@@ -37,7 +41,21 @@ const Index: React.FC<IndexProps> = ({}) => {
   }, [input]);
 
   onKey((key) => {
+    if (inputCounter === initialWords.length) return;
+
+    if (!startTime) {
+      setStartTime(getTime());
+    }
+
     if (key === " " && input.length > 0) {
+      setInputCounter(inputCounter + 1);
+      const durationInMinutes = (getTime() - startTime) / 60000.0;
+      if (input === target) {
+        setWordCount(wordCount + 1);
+        setWpm(parseInt(((wordCount + 1) / durationInMinutes).toFixed(2)));
+      } else {
+        setWpm(parseInt((wordCount / durationInMinutes).toFixed(2)));
+      }
       setInput("");
       setTargetIndex(targetIndex + 1);
       setTarget(initialWords[targetIndex + 1]);
@@ -53,7 +71,8 @@ const Index: React.FC<IndexProps> = ({}) => {
       setInput(input.slice(0, -1));
     }
 
-    if (input.length <= 50 && key !== "Backspace") setInput(input + key);
+    if (input.length <= 50 && key !== "Backspace" && key !== " ")
+      setInput(input + key);
   });
 
   return (
@@ -62,8 +81,10 @@ const Index: React.FC<IndexProps> = ({}) => {
         <title>Typist</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <h1>Typist</h1>
 
       <main className={styles.main}>
+        <div className={styles.wpmContainer}>wpm: {wpm}</div>
         <article className={styles.wordsContainer}>
           {outgoing?.map((word, key) => {
             if (word.text.length > 0) {
@@ -86,13 +107,20 @@ const Index: React.FC<IndexProps> = ({}) => {
         </article>
 
         <div style={inputStyles} className={styles.inputContainer}>
-          {input ? input : "␣"}
+          {input ? input : "..."}
         </div>
       </main>
       <p className={styles.title}>
-        Hello, I'm{" "}
         <a href="https://resume.evanchristians.co.za" target="_blank">
-          Evan!
+          $(whoami)
+        </a>{" "}
+        &middot;{" "}
+        <a href="https://github.com/evanchristians" target="_blank">
+          github
+        </a>{" "}
+        &middot;{" "}
+        <a href="https://www.linkedin.com/in/evan-christians-50ba30159/" target="_blank">
+          linkedin
         </a>
       </p>
     </Wrapper>
