@@ -98,7 +98,7 @@ const Index = ({}) => {
   onKey((key) => {
     if (inputCounter === words.length || blockInputs === true) return;
     setPlaceHolder("");
-    
+
     if (!startTime) {
       setStartTime(getTime());
     }
