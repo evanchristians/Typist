@@ -17,10 +17,17 @@ export const Theme = {
   colors: {
     ...theme.colors,
     green: {
-      100: "#16A085" 
+      100: "#16A085",
+    },
+    blue: {
+      100: "#0070f3",
     },
     grey: {
-      100: "#eeeeee"
-    }
-  }
+      100: "#eeeeee",
+    },
+    red: {
+      10: "#FF474733",
+      100: "#FF4747",
+    },
+  },
 };
